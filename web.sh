@@ -12,20 +12,27 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # Install if we don't have it
 if test ! $(which brew); then
   echo "Installing homebrew..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  sudo chown -R $(whoami) /usr/local
 fi
 
 # Make sure we’re using the latest Homebrew.
 brew update
 
-brew install node
+brew install nvm
+NVM_DIR=$(brew --prefix nvm)
+if [ -d "$NVM_DIR" ]; then
+    source $NVM_DIR/nvm.sh
+    nvm install node
+fi
 
 # Remove outdated versions from the cellar.
 brew cleanup
 
-npm install -g coffee-script
+# npm install -g coffee-script
 npm install -g grunt-cli
+npm install -g eslint
 npm install -g jshint
 npm install -g less
 
-#gem install jekyll
+# gem install jekyll
