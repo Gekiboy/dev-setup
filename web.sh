@@ -25,9 +25,13 @@ if [ -d "$NVM_DIR" ]; then
     source $NVM_DIR/nvm.sh
     nvm install node
 fi
+brew install yarn
 
 # Remove outdated versions from the cellar.
 brew cleanup
+
+# Reload the paths so that npm can be found
+source ~/.path
 
 # npm install -g coffee-script
 npm install -g grunt-cli
